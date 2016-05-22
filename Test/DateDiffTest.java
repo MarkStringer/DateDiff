@@ -3,16 +3,17 @@
  */
 import org.junit.*;
 import static org.junit.Assert.*;
+import com.company.*;
 
 public class DateDiffTest {
 
     @Test
     public void testDateParser()
     {
-        int dateTriplet [] = DateDiff.parseDate("01/02/2003");
-        assertEquals(dateTriplet[0], 1);
-        assertEquals(dateTriplet[1], 2);
-        assertEquals(dateTriplet[2], 2003);
+        DateTriple triple = DateDiff.parseDate("01/02/2003");
+        assertEquals(triple.day, 1);
+        assertEquals(triple.month, 2);
+        assertEquals(triple.year, 2003);
 
     }
     @Test
