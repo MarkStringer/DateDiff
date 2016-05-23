@@ -105,4 +105,10 @@ public class DateDiffTest {
     {
         assertEquals(1, DateDiff.getDaysBetween("31/12/99", "01/01/00"));
     }
+
+    @Test
+    public void testYearHistorical()
+    {
+        assertEquals(1, DateDiff.getDaysBetween("31/12/0099", "01/01/0100"));
+    }
 }
