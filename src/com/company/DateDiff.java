@@ -5,9 +5,6 @@ import java.util.regex.Pattern;
 
 
 public class DateDiff {
-
-
-
     public static int getDaysBetween(String startDate, String endDate) {
         int[] daysInMonths = {
                 31,
@@ -26,11 +23,7 @@ public class DateDiff {
 
         DateTriple start = parseDate(startDate);
         DateTriple end = parseDate(endDate);
-        DateTriple current = new DateTriple();
-
-        current.day = start.day;
-        current.month = start.month;
-        current.year = start.year;
+        DateTriple current = new DateTriple(start.day, start.month, start.year);
 
         int dayCount = 0;
 
@@ -71,22 +64,19 @@ public class DateDiff {
             return true;
         else if (year % 100 == 0)
             return false;
-        else if (year % 4 == 0)
-            return true;
         else
-            return false;
+            return(year % 4 == 0);
     }
 
     public static  DateTriple parseDate(String date) {
-        DateTriple triple = new DateTriple();
         String patternString = "(\\d\\d)/(\\d\\d)/(\\d+)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(date);
         matcher.matches();
 
-        triple.day = Integer.parseInt(matcher.group(1));
-        triple.month = Integer.parseInt(matcher.group(2));
-        triple.year = Integer.parseInt(matcher.group(3));
+        DateTriple triple = new DateTriple(Integer.parseInt(matcher.group(1)),
+        Integer.parseInt(matcher.group(2)),
+        Integer.parseInt(matcher.group(3)));
 
         return triple;
     }
