@@ -21,13 +21,26 @@ public class DateDiff {
                 31
         };
 
-        DateTriple start = parseDate(startDate);
-        DateTriple end = parseDate(endDate);
+        DateTriple start;
+        DateTriple end;
+        start = parseDate(startDate);
+        end = parseDate(endDate);
+        if (DateTriple.compare(start, end) == -1)
+        {
+            start = parseDate(endDate);
+            end = parseDate(startDate);
+        }
+
         DateTriple current = new DateTriple(start.day, start.month, start.year);
 
         int dayCount = 0;
 
         while (true) {
+            if ((current.month == end.month)
+                    && (current.day == end.day)
+                    && (current.year== end.year))
+                return dayCount;
+
             current.day++;
             dayCount++;
             if (current.day > (daysInMonths[current.month - 1] + leap(current.year, current.month))) {
@@ -39,11 +52,6 @@ public class DateDiff {
                 }
                 current.day = 1;
             }
-
-            if ((current.month == end.month)
-                    && (current.day == end.day)
-                    && (current.year== end.year))
-                return dayCount;
         }
 
     }
@@ -74,9 +82,17 @@ public class DateDiff {
         Matcher matcher = pattern.matcher(date);
         matcher.matches();
 
+        String yearString = matcher.group(3);
+        int year = Integer.parseInt(matcher.group(3));
+
+        if((yearString.length()==2)&& (year <= 29))
+            year+=2000;
+        else if ((yearString.length()==2)&& (year > 29))
+            year+=1900;
+
         DateTriple triple = new DateTriple(Integer.parseInt(matcher.group(1)),
         Integer.parseInt(matcher.group(2)),
-        Integer.parseInt(matcher.group(3)));
+        year );
 
         return triple;
     }
